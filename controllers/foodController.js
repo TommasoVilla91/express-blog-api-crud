@@ -11,7 +11,7 @@ const show = (req, res) => {
     const recipeId = parseInt(req.params.id);
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
     if(specRecipe === undefined) {
-        res.sandStatus(404);
+        res.sendStatus(404);
     } else {
         res.json(specRecipe);
     };    
@@ -39,11 +39,11 @@ const destroy = (req, res) => {
     const recipeId = parseInt(req.params.id);
     const indexRecipe = recipesList.findIndex((curRecipe) => curRecipe.id);
     if(recipeId === -1) {
-        res.sandStatus(404);
+        res.sendStatus(404);
     } else {
         recipesList.splice(indexRecipe, 1);
-        console.log(recipesList);        
-        res.sandStatus(204);
+        res.sendStatus(204);
+        console.log(recipesList);
     };
 };
 
