@@ -2,8 +2,12 @@ const recipesList = require("../data/foods");
 
 
 // index
-const index = (req, res) => {    
-    res.json(recipesList);
+const index = (req, res) => {  
+    const queryString = req.query;
+    if(queryString.tag !== undefined) {
+        recipesToSend = recipesList.filter((curRecipe) => curRecipe.tags.includes(queryString.tag));
+        res.json(recipesToSend);
+    };
 };
 
 // show
@@ -12,6 +16,7 @@ const show = (req, res) => {
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
     if(specRecipe === undefined) {
         res.sendStatus(404);
+        res.message("Elemento non trovato!")
     } else {
         res.json(specRecipe);
     };    
@@ -40,6 +45,7 @@ const destroy = (req, res) => {
     const indexRecipe = recipesList.findIndex((curRecipe) => curRecipe.id);
     if(recipeId === -1) {
         res.sendStatus(404);
+        res.message("Elemento non trovato!")
     } else {
         recipesList.splice(indexRecipe, 1);
         res.sendStatus(204);
