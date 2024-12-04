@@ -1,4 +1,4 @@
-
+const recipesList = require("../data/foods");
 
 
 // index
@@ -11,11 +11,7 @@ const show = (req, res) => {
     const recipeId = parseInt(req.params.id);
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
     if(specRecipe === undefined) {
-        res.statusCode = 404;
-        res.json({
-            error: true,
-            message: "Ricetta non trovata",
-        });
+        res.sandStatus(404);
     } else {
         res.json(specRecipe);
     };    
@@ -41,7 +37,14 @@ const modify = (req, res) => {
 // destroy
 const destroy = (req, res) => {
     const recipeId = parseInt(req.params.id);
-    res.json('eliminiamo post ' + recipeId);
+    const indexRecipe = recipesList.findIndex((curRecipe) => curRecipe.id);
+    if(recipeId === -1) {
+        res.sandStatus(404);
+    } else {
+        recipesList.splice(indexRecipe, 1);
+        console.log(recipesList);        
+        res.sandStatus(204);
+    };
 };
 
 module.exports = {
