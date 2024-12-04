@@ -7,6 +7,8 @@ const index = (req, res) => {
     if(queryString.tag !== undefined) {
         recipesToSend = recipesList.filter((curRecipe) => curRecipe.tags.includes(queryString.tag));
         res.json(recipesToSend);
+    } else {
+        res.json(recipesToSend);
     };
 };
 
