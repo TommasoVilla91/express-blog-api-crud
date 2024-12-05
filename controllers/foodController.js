@@ -8,7 +8,7 @@ const index = (req, res) => {
         recipesToSend = recipesList.filter((curRecipe) => curRecipe.tags.includes(queryString.tag));
         res.json(recipesToSend);
     } else {
-        res.json(recipesToSend);
+        res.json(recipesList);
     };
 };
 
@@ -18,7 +18,6 @@ const show = (req, res) => {
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
     if(specRecipe === undefined) {
         res.sendStatus(404);
-        res.message("Elemento non trovato!")
     } else {
         res.json(specRecipe);
     };    
@@ -26,7 +25,20 @@ const show = (req, res) => {
 
 // create
 const create = (req, res) => {
-    res.json('creiamo un nuovo post');
+    const lastIndex = recipesList.length - 1;
+    const lastItem = recipesList[lastIndex];
+    const newItemID = lastItem.id + 1;
+    const newRecipe = {
+        id: newItemID,
+        titolo: req.body.titolo,
+        contenuto: req.body.contenuto,
+        immagine: req.body.immagine,
+        tags: req.body.tags
+    };
+    
+    recipesList.push(newRecipe);
+    res.sendStatus(201);
+    res.json(newRecipe);
 };
 
 // update
@@ -47,7 +59,6 @@ const destroy = (req, res) => {
     const indexRecipe = recipesList.findIndex((curRecipe) => curRecipe.id);
     if(recipeId === -1) {
         res.sendStatus(404);
-        res.message("Elemento non trovato!")
     } else {
         recipesList.splice(indexRecipe, 1);
         res.sendStatus(204);

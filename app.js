@@ -3,8 +3,9 @@ const app = express();
 const port = 3001;
 const recipesRouters = require("./routers/posts");
 
+app.use(express.json());
 app.use(express.static("public"));
-app.use("/foods", recipesRouters);
+app.use("/posts", recipesRouters);
 
 
 app.get('/', (req, res) => {
