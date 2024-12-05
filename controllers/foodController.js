@@ -18,6 +18,10 @@ const show = (req, res) => {
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
     if(specRecipe === undefined) {
         res.sendStatus(404);
+        res.json({
+            error: true,
+            message: "Elemento non trovato :("
+        });
     } else {
         res.json(specRecipe);
     };    
@@ -49,7 +53,11 @@ const update = (req, res) => {
     updatedElem.id = recipeId
 
     if(indexToUpdate === -1) {
-        res.sendStatus(404);
+        res.statusCode = 404;
+        res.json({
+            error: true,
+            message: "Elemento non trovato :("
+        });
     } else {
         recipesList[indexToUpdate] = updatedElem
         res.json(updatedElem);
