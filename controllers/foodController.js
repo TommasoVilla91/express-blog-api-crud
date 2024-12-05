@@ -35,16 +35,25 @@ const create = (req, res) => {
         immagine: req.body.immagine,
         tags: req.body.tags
     };
-    
+
     recipesList.push(newRecipe);
-    res.sendStatus(201);
-    res.json(newRecipe);
+    res.statusCode = 201;
+    res.json(recipesList);
 };
 
 // update
 const update = (req, res) => {
     const recipeId = parseInt(req.params.id);
-    res.json('modifichiamo i dati del post ' + recipeId);
+    const updatedElem = req.body;
+    const indexToUpdate = recipesList.findIndex((curRecipe) => curRecipe.id === recipeId);
+    updatedElem.id = recipeId
+
+    if(indexToUpdate === -1) {
+        res.sendStatus(404);
+    } else {
+        recipesList[indexToUpdate] = updatedElem
+        res.json(updatedElem);
+    };
 };
 
 // modify
