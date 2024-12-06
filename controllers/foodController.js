@@ -8,7 +8,10 @@ const index = (req, res) => {
         recipesToSend = recipesList.filter((curRecipe) => curRecipe.tags.includes(queryString.tag));
         res.json(recipesToSend);
     } else {
-        res.json(recipesList);
+        res.json({
+            ricette: recipesList,
+            totale: recipesList.length
+        });
     };
 };
 
@@ -16,15 +19,7 @@ const index = (req, res) => {
 const show = (req, res) => {
     const recipeId = parseInt(req.params.id);
     const specRecipe = recipesList.find(curRecipe => curRecipe.id === recipeId);
-    if(specRecipe === undefined) {
-        res.sendStatus(404);
-        res.json({
-            error: true,
-            message: "Elemento non trovato :("
-        });
-    } else {
-        res.json(specRecipe);
-    };    
+    res.json(specRecipe);
 };
 
 // create
