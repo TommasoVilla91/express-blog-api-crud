@@ -1,10 +1,17 @@
 const express = require("express");
+const cors = require("cors");
 const handleErrors = require("./middlewares/handleErrors");
 const recipesRouters = require("./routers/posts");
 const recipesList = require("./data/foods");
 
 const app = express();
 const port = 3001;
+
+app.use(
+    cors({
+        origin: "http://localhost:5173/"
+    })
+);
 
 app.use(express.json());
 app.use(express.static("public"));

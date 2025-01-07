@@ -4,6 +4,7 @@ const handleErrors = (err, req, res, next) => {
         error: true,
         message: "Errore interno del server :("
     });
+    next();
 };
 
 module.exports = handleErrors;
